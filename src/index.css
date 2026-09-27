@@ -1,0 +1,546 @@
+:root {
+  --bg: #16121f;
+  --surface: #211a2e;
+  --surface-raised: #2a2138;
+  --accent: #f2b705;
+  --accent-soft: #f2b70522;
+  --teal: #2fd9c4;
+  --text: #f5f1e8;
+  --text-muted: #8d84a3;
+  --border: #3a3050;
+  --danger: #f28b82;
+
+  --font-display: 'Bebas Neue', 'Arial Narrow', sans-serif;
+  --font-body: 'IBM Plex Sans', system-ui, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  line-height: 1.5;
+}
+
+a {
+  color: inherit;
+}
+
+.app {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 24px 80px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* --- Navbar ------------------------------------------------------ */
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 28px 0;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.navbar__mark {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  letter-spacing: 0.03em;
+  text-decoration: none;
+}
+
+.navbar__notch {
+  width: 10px;
+  height: 10px;
+  background: var(--accent);
+  border-radius: 2px;
+  display: inline-block;
+}
+
+.navbar__links {
+  display: flex;
+  align-items: center;
+  gap: 26px;
+  font-size: 0.95rem;
+  color: var(--text-muted);
+}
+
+.navbar__links a {
+  text-decoration: none;
+  position: relative;
+  padding-bottom: 4px;
+  transition: color 0.15s ease;
+}
+
+.navbar__links a:hover {
+  color: var(--text);
+}
+
+.navbar__links a.is-active {
+  color: var(--accent);
+}
+
+.navbar__links a.is-active::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -4px;
+  height: 2px;
+  background: var(--accent);
+  border-radius: 2px;
+}
+
+.navbar__user {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.85rem;
+}
+
+.navbar__user button {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  border-radius: 6px;
+  padding: 6px 12px;
+  font-family: var(--font-body);
+  cursor: pointer;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+
+.navbar__user button:hover {
+  border-color: var(--accent);
+  color: var(--text);
+}
+
+/* --- Hero ---------------------------------------------------------- */
+.hero {
+  position: relative;
+  padding: 48px 0 56px;
+  max-width: 620px;
+  overflow: visible;
+}
+
+.hero__glow {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px);
+  opacity: 0.35;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.hero__glow--amber {
+  width: 260px;
+  height: 260px;
+  background: var(--accent);
+  top: -60px;
+  left: -80px;
+}
+
+.hero__glow--teal {
+  width: 200px;
+  height: 200px;
+  background: var(--teal);
+  top: 40px;
+  left: 340px;
+}
+
+.hero__eyebrow {
+  color: var(--teal);
+  font-size: 0.95rem;
+  margin: 0 0 6px;
+}
+
+.hero__title {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(2.8rem, 6vw, 4.6rem);
+  line-height: 0.95;
+  margin: 0 0 18px;
+  letter-spacing: 0.01em;
+}
+
+.hero__sub {
+  color: var(--text-muted);
+  font-size: 1.05rem;
+  max-width: 480px;
+  margin: 0;
+}
+
+/* --- Page transition ----------------------------------------------- */
+/* Each page component (CatalogPage's <main>, AddGamePage, LoginPage) mounts
+   fresh on navigation, so this animation replays automatically every time
+   you move between pages. */
+@keyframes page-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.catalog,
+.form-page {
+  animation: page-fade-in 0.35s ease both;
+}
+
+/* --- Filters --------------------------------------------------------- */
+.filters {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-bottom: 28px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--border);
+}
+
+.filters__group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.filters__group--search {
+  flex: 1;
+  min-width: 200px;
+}
+
+.filters__group label {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.filters__group select,
+.filters__group input {
+  background: var(--surface);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 8px 12px;
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  min-width: 160px;
+  transition: border-color 0.15s ease;
+}
+
+.filters__group select:focus,
+.filters__group input:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+/* --- Grid + entrance animation --------------------------------------- */
+.game-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 20px;
+}
+
+@keyframes card-rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.game-grid__item {
+  animation: card-rise-in 0.4s ease both;
+  animation-delay: var(--delay, 0ms);
+}
+
+.game-grid__empty,
+.catalog__loading,
+.catalog__error,
+.page-loading {
+  color: var(--text-muted);
+  padding: 40px 0;
+}
+
+.catalog__error {
+  color: var(--danger);
+}
+
+/* --- Game card --------------------------------------------------------- */
+.game-card {
+  position: relative;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+  transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.game-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px -12px var(--accent-soft);
+}
+
+.game-card__image-wrap {
+  position: relative;
+  aspect-ratio: 3 / 2;
+  overflow: hidden;
+}
+
+.game-card__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease;
+}
+
+.game-card:hover .game-card__image {
+  transform: scale(1.06);
+}
+
+.game-card__rating {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #16121f;
+  font-weight: 600;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+}
+
+.game-card__body {
+  padding: 18px 20px 20px;
+}
+
+.game-card__genre {
+  color: var(--teal);
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin: 0 0 4px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.game-card__title {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  margin: 0 0 10px;
+}
+
+.game-card__desc {
+  color: var(--text-muted);
+  font-size: 0.88rem;
+  margin: 0 0 16px;
+}
+
+.game-card__meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-bottom: 14px;
+}
+
+.game-card__platforms {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.game-card__platforms li {
+  background: var(--surface-raised);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 3px 8px;
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* --- Forms (Add game / Login) ---------------------------------------- */
+.form-page {
+  max-width: 640px;
+  margin: 40px auto 0;
+}
+
+.form-page--narrow {
+  max-width: 420px;
+}
+
+.form-page__title {
+  font-family: var(--font-display);
+  font-size: clamp(2.2rem, 5vw, 3rem);
+  font-weight: 400;
+  margin: 0 0 8px;
+}
+
+.form-page__sub {
+  color: var(--text-muted);
+  margin: 0 0 28px;
+  font-size: 0.95rem;
+}
+
+.form-page__sub code {
+  background: var(--surface-raised);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.85em;
+}
+
+.form-page__toggle {
+  margin-top: 16px;
+  background: none;
+  border: none;
+  color: var(--teal);
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  padding: 0;
+}
+
+.form-page__toggle:hover {
+  text-decoration: underline;
+}
+
+.game-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 28px;
+}
+
+.game-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.game-form input,
+.game-form textarea {
+  background: var(--surface-raised);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 10px 12px;
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  transition: border-color 0.15s ease;
+}
+
+.game-form input:focus,
+.game-form textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.game-form__row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 16px;
+}
+
+.game-form__platforms {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 14px 16px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+.game-form__platforms legend {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  padding: 0 4px;
+}
+
+.game-form__checkbox {
+  flex-direction: row !important;
+  align-items: center;
+  gap: 8px !important;
+  color: var(--text) !important;
+  font-size: 0.9rem !important;
+}
+
+.game-form button[type='submit'] {
+  align-self: flex-start;
+  background: var(--accent);
+  color: #16121f;
+  border: none;
+  border-radius: 6px;
+  padding: 12px 24px;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.game-form button[type='submit']:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px -8px var(--accent-soft);
+}
+
+.game-form button[type='submit']:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.game-form__error {
+  color: var(--danger);
+  font-size: 0.88rem;
+  margin: 0;
+}
+
+.game-form__success {
+  color: var(--teal);
+  font-size: 0.88rem;
+  margin: 0;
+}
